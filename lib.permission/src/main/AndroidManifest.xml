@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zinc.libpermission" >
+
+    <application>
+        <activity android:name=".JPermissionActivity"
+            android:theme="@style/translucent"
+            android:screenOrientation="portrait"
+            />
+    </application>
+</manifest>
