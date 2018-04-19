@@ -49,11 +49,12 @@ private void requestOnePermission() {
 ```
 2、编写取消和拒绝（即点击了“不再提示”）回调，如下：
 ```
+//只需加上注解 @PermissionCanceled 和 参数类型为 CancelInfo 的一个参数即可
 @PermissionCanceled()
 private void cancel(CancelInfo cancelInfo) {
    //do something when the permission was canceled.
 }
-
+//只需加上注解 @PermissionDenied 和 参数类型为 DenyInfo 的一个参数即可
 @PermissionDenied()
 private void deny(DenyInfo denyInfo) {
    //do something when the permission was denied.
