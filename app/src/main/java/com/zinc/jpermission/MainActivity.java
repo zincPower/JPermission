@@ -2,7 +2,6 @@ package com.zinc.jpermission;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Environment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.zinc.jpermission.manu.MyTestGenymotionMenu;
 import com.zinc.libpermission.annotation.Permission;
 import com.zinc.libpermission.annotation.PermissionCanceled;
 import com.zinc.libpermission.annotation.PermissionDenied;
@@ -19,8 +19,6 @@ import com.zinc.libpermission.callback.IPermission;
 import com.zinc.libpermission.utils.JPermissionHelper;
 import com.zinc.libpermission.utils.JPermissionUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_two_permission).setOnClickListener(this);
         findViewById(R.id.btn_request_200).setOnClickListener(this);
         findViewById(R.id.btn_service).setOnClickListener(this);
+
+        //设置各自品牌的系统权限页
+//        JPermissionUtil.setManuFacturer("genymotion", MyTestGenymotionMenu.class);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frame_layout, new MyFragment());
@@ -90,8 +91,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void requestAllExclue() {
         List<String> excluePermission = new ArrayList<>();
         excluePermission.add(Manifest.permission.CAMERA);
-        excluePermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
-        JPermissionUtil.requestAllPermission(this, excluePermission);
+        JPermissionUtil.requestAllPermission(this, excluePermission, new IPermission() {
+            @Override
+            public void ganted() {
+
+            }
+
+            @Override
+            public void denied(int requestCode, List<String> denyList) {
+
+            }
+
+            @Override
+            public void canceled(int requestCode) {
+
+            }
+        });
     }
 
     private void requestAll() {
@@ -121,6 +136,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @PermissionCanceled(requestCode = 200)
     private void cancelCode200(CancelInfo cancelInfo){
         Toast.makeText(this, "cancel__200", Toast.LENGTH_SHORT).show();
+    }
+
+    @PermissionDenied(requestCode = 200)
+    private void denyCode200(DenyInfo denyInfo){
+        Toast.makeText(this, "deny__200", Toast.LENGTH_SHORT).show();
     }
 
     @PermissionCanceled()
