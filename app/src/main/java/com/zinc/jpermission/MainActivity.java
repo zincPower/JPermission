@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn_request_200).setOnClickListener(this);
         findViewById(R.id.btn_service).setOnClickListener(this);
 
+        JPermissionUtil.requestAllPermission(this);
+
         //设置各自品牌的系统权限页
 //        JPermissionUtil.setManuFacturer("genymotion", MyTestGenymotionMenu.class);
 
