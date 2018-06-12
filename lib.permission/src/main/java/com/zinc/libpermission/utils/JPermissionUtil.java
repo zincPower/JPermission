@@ -152,6 +152,12 @@ public class JPermissionUtil {
      * @version
      */
     public static void requestAllPermission(Context context, List<String> excluedPermission, IPermission iPermission) {
+
+        //如果小于 6.0 不进行逻辑处理
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.M){
+            return;
+        }
+
         String[] manifestPermission = JPermissionHelper.getManifestPermission(context);
 
         if (manifestPermission == null) {
