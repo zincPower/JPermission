@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:1.1.0' //添加这一行
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.2' //添加这一行
     }
 }
 
@@ -35,7 +35,7 @@ apply plugin: 'android-aspectjx' //添加这一行
 ```
 在依赖中增加：
 ```
-compile 'com.github.zincPower:JPermission:0.1'
+compile 'com.github.zincPower:JPermission:0.3'
 ```
 
 # 简单使用
