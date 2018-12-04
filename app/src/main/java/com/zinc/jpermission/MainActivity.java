@@ -34,6 +34,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_request_200).setOnClickListener(this);
         findViewById(R.id.btn_service).setOnClickListener(this);
         findViewById(R.id.btn_req_in_base).setOnClickListener(this);
+        findViewById(R.id.btn_req_in_none_context).setOnClickListener(this);
+        findViewById(R.id.view_group_req_in_view).setOnClickListener(this);
 
         JPermissionUtil.requestAllPermission(this);
 
@@ -70,7 +72,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.btn_req_in_base:
                 requestTheBaseReq();
                 break;
+            case R.id.btn_req_in_none_context:
+                requestInNoneContext();
+                break;
+            case R.id.view_group_req_in_view:
+                requestInView();
+                break;
         }
+    }
+
+    private void requestInView() {
+
+    }
+
+    private void requestInNoneContext() {
+        NoneContext noneContext = new NoneContext();
+        noneContext.requestInNormalClass();
     }
 
     private void requestTheBaseReq() {
@@ -84,13 +101,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Permission(value = {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode = 200)
     private void requestRequest200() {
-        Toast.makeText(this, "请求定位权限成功，200", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "请求定位权限成功，200");
     }
 
     @Permission({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
     private void requestTwoPermission() {
-        Toast.makeText(this, "请求两个权限成功（写和相机）", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "请求两个权限成功（写和相机）");
     }
 

@@ -9,6 +9,7 @@ import com.zinc.libpermission.bean.CancelInfo;
 import com.zinc.libpermission.bean.DenyInfo;
 import com.zinc.libpermission.callback.IPermission;
 import com.zinc.libpermission.utils.JPermissionHelper;
+import com.zinc.libpermission.utils.JPermissionUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -47,6 +48,12 @@ public class JPermissionAspect {
             context = ((android.support.v4.app.Fragment) object).getActivity();
         } else if (joinPoint.getThis() instanceof android.app.Fragment) {
             context = ((android.app.Fragment) object).getActivity();
+        } else if (object instanceof android.view.View) {
+            context = ((android.view.View) object).getContext();
+        }
+
+        if (context == null) {
+            context = JPermissionHelper.getContext();
         }
 
         if (context == null || permission == null) {

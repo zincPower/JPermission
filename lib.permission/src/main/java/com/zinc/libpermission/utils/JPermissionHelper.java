@@ -25,6 +25,9 @@ public class JPermissionHelper {
     public static final int DEFAULT_REQUEST_CODE = 0xABC1994;
     public static final String TAG = "JPermission";
 
+    // 上下文
+    private static Context JPERMISSION_CONTEXT = null;
+
     private static SimpleArrayMap<String, Integer> MIN_SDK_PERMISSIONS;
 
     static {
@@ -40,6 +43,20 @@ public class JPermissionHelper {
     }
 
     private static volatile int targetSdkVersion = -1;
+
+    /**
+     * 注入一个上下文，用于无法获取上下文时使用
+     * 切记注入点在{@link android.app.Application}，否则会导致内存泄漏
+     *
+     * @param context 上下文
+     */
+    public static void injectContext(Context context) {
+        JPERMISSION_CONTEXT = context;
+    }
+
+    public static Context getContext() {
+        return JPERMISSION_CONTEXT;
+    }
 
     /**
      * @date 创建时间 2018/4/18

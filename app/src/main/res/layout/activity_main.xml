@@ -53,6 +53,18 @@
         android:text="基类请求权限且回调"
         android:textSize="12sp" />
 
+    <Button
+        android:id="@+id/btn_req_in_none_context"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="在无上下文的环境中请求权限"
+        android:textSize="12sp" />
+
+    <com.zinc.jpermission.MyViewGroup
+        android:id="@+id/view_group_req_in_view"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
