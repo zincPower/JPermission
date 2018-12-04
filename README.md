@@ -35,7 +35,7 @@ apply plugin: 'android-aspectjx' //添加这一行
 ```
 在依赖中增加：
 ```
-implementation 'com.github.zincPower:JPermission:0.3'
+implementation 'com.github.zincPower:JPermission:0.4'
 ```
 
 # 简单使用
