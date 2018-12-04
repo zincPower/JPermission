@@ -1,6 +1,13 @@
 # JPermission
 Android（安卓）基于注解的6.0权限动态申请
 
+# 支持的场景
+1. activity
+2. fragment
+3. service
+4. 自定义view
+5. 无上下文的类中(需要通过 JPermissionHelper 注入context)
+
 # 如何接入
 1、在项目的gradle中添加如下代码
 ```
@@ -35,7 +42,7 @@ apply plugin: 'android-aspectjx' //添加这一行
 ```
 在依赖中增加：
 ```
-implementation 'com.github.zincPower:JPermission:0.4'
+implementation 'com.github.zincPower:JPermission:0.5'
 ```
 
 # 简单使用
@@ -64,6 +71,37 @@ private void deny(DenyInfo denyInfo) {
 ```
 //前往开启权限的界面
 JPermissionUtil.goToMenu(context);
+```
+
+# 无上下文的类中如何使用
+1、需要通过 JPermissionHelper 提供一个context，**当然不注入也能正常使用，但只能在有上下文的类中使用**，注入代码如下
+```
+JPermissionHelper.injectContext(this);
+```
+> 温馨提示：为了避免内存泄漏，请于Application中注入
+
+2、无上下文的类中如下编写(用法与第一点“简单使用”一样)，只需要在需要的地方调用对应的方法。例如调用此处的requestInNormalClass方法即可
+```
+public class NoneContext {
+
+    private final String TAG = NoneContext.class.getSimpleName();
+
+    @Permission(value = {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode = 200)
+    public void requestInNormalClass() {
+        Log.i(TAG, "请求定位权限成功，200");
+    }
+
+    @PermissionCanceled()
+    private void cancel(CancelInfo cancelInfo) {
+        Log.i(TAG, "cancel:" + cancelInfo.getRequestCode());
+    }
+
+    @PermissionDenied()
+    private void deny(DenyInfo denyInfo) {
+        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" + denyInfo.getDeniedPermissions() + "]");
+    }
+
+}
 ```
 
 # 高级使用
