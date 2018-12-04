@@ -37,22 +37,25 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="请求定位(回调值200)"
-        android:textSize="12sp"
-        />
+        android:textSize="12sp" />
 
     <Button
         android:id="@+id/btn_service"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Service请求权限"
-        android:textSize="12sp"
-        />
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btn_req_in_base"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="基类请求权限且回调"
+        android:textSize="12sp" />
 
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
