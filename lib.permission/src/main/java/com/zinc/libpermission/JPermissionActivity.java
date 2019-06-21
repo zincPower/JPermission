@@ -30,7 +30,10 @@ public class JPermissionActivity extends Activity {
     private int mRequestCode;
     private static IPermission permissionListener;
 
-    public static void permissionRequest(Context context, String[] permissions, int requestCode, IPermission iPermission) {
+    public static void permissionRequest(Context context,
+                                         String[] permissions,
+                                         int requestCode,
+                                         IPermission iPermission) {
 
         permissionListener = iPermission;
 
@@ -129,5 +132,7 @@ public class JPermissionActivity extends Activity {
     public void finish() {
         super.finish();
         overridePendingTransition(0, 0);
+        permissionListener = null;
     }
+
 }

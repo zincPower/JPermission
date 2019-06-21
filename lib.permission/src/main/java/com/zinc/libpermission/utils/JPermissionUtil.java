@@ -12,7 +12,6 @@ import com.zinc.libpermission.menu.OPPO;
 import com.zinc.libpermission.menu.VIVO;
 import com.zinc.libpermission.menu.base.IMenu;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +97,11 @@ public class JPermissionUtil {
         }
 
         String[] manifestPermission = JPermissionHelper.getManifestPermission(context);
-        JPermissionActivity.permissionRequest(context, manifestPermission, JPermissionHelper.DEFAULT_REQUEST_CODE, iPermission);
+        JPermissionActivity
+                .permissionRequest(context,
+                        manifestPermission,
+                        JPermissionHelper.DEFAULT_REQUEST_CODE,
+                        iPermission);
     }
 
     /**
@@ -181,7 +184,11 @@ public class JPermissionUtil {
             return;
         }
 
-        JPermissionActivity.permissionRequest(context, tempPer.toArray(new String[tempPer.size()]), JPermissionHelper.DEFAULT_REQUEST_CODE, iPermission);
+        JPermissionActivity
+                .permissionRequest(context,
+                        tempPer.toArray(new String[tempPer.size()]),
+                        JPermissionHelper.DEFAULT_REQUEST_CODE,
+                        iPermission);
     }
 
 }
