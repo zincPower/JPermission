@@ -31,6 +31,10 @@ import androidx.fragment.app.Fragment;
 public class JPermissionAspect {
     private static final String TAG = JPermissionAspect.class.getSimpleName();
 
+    public static JPermissionAspect aspectOf() {
+        return new JPermissionAspect();
+    }
+
     /**
      * 它在选择Jpoint的时候，把 @Permission 使用上了，并且携带有这个注解的API都是目标 JPoint
      * 接着，由于我们希望在函数中获取注解的信息，所有这里的 poincut 函数有一个参数，
