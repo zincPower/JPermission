@@ -17,7 +17,6 @@ import com.zinc.libpermission.utils.JPermissionUtil;
  * @description
  */
 public class NoneContext {
-
     private final String TAG = NoneContext.class.getSimpleName();
 
     @Permission(value = {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode = 200)
@@ -34,5 +33,4 @@ public class NoneContext {
     private void deny(DenyInfo denyInfo) {
         Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" + denyInfo.getDeniedPermissions() + "]");
     }
-
 }

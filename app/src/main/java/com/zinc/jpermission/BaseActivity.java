@@ -1,9 +1,6 @@
 package com.zinc.jpermission;
 
 import android.Manifest;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +10,8 @@ import com.zinc.libpermission.annotation.PermissionDenied;
 import com.zinc.libpermission.bean.CancelInfo;
 import com.zinc.libpermission.bean.DenyInfo;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * @author Jiang zinc
  * @date 创建时间：2018/12/3
@@ -20,7 +19,7 @@ import com.zinc.libpermission.bean.DenyInfo;
  */
 public class BaseActivity extends AppCompatActivity {
 
-    private String TAG = "BaseActivity";
+    private final String TAG = "BaseActivity";
 
     @Permission(value = {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode = 500)
     protected void requestInBase() {

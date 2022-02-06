@@ -6,13 +6,13 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.PermissionChecker;
-import android.support.v4.util.SimpleArrayMap;
 import android.util.Log;
 
 import java.util.Arrays;
+
+import androidx.collection.SimpleArrayMap;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 /**
  * @author Jiang zinc
@@ -114,7 +114,8 @@ public class JPermissionHelper {
             // ContextCompat.checkSelfPermission，主要用于检测某个权限是否已经被授予。
             // 方法返回值为PackageManager.PERMISSION_DENIED或者PackageManager.PERMISSION_GRANTED
             // 当返回DENIED就需要进行申请授权了。
-            return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
+            return ContextCompat.checkSelfPermission(context, permission) ==
+                    PackageManager.PERMISSION_GRANTED;
         } catch (RuntimeException t) {
             return false;
         }
@@ -126,7 +127,8 @@ public class JPermissionHelper {
      * @Description 检查需要给予的权限是否需要显示理由
      * @version
      */
-    public static boolean shouldShowRequestPermissionRationale(Activity activity, String... permissions) {
+    public static boolean shouldShowRequestPermissionRationale(Activity activity,
+                                                               String... permissions) {
         for (String permission : permissions) {
             // 这个API主要用于给用户一个申请权限的解释，该方法只有在用户在上一次已经拒绝过你的这个权限申请。
             // 也就是说，用户已经拒绝一次了，你又弹个授权框，你需要给用户一个解释，为什么要授权，则使用该方法。
@@ -148,7 +150,8 @@ public class JPermissionHelper {
             if (targetSdkVersion != -1) {
                 return targetSdkVersion;
             }
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo packageInfo =
+                    context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             targetSdkVersion = packageInfo.applicationInfo.targetSdkVersion;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
@@ -157,7 +160,8 @@ public class JPermissionHelper {
 
     public static String[] getManifestPermission(Context context) {
         try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
             String[] requestedPermissions = packageInfo.requestedPermissions;
             Log.e("Test", Arrays.asList(requestedPermissions).toString());
             return requestedPermissions;

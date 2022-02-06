@@ -2,7 +2,6 @@ package com.zinc.jpermission;
 
 import android.Manifest;
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +18,11 @@ import com.zinc.libpermission.utils.JPermissionUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.FragmentTransaction;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    private String TAG = "MainActivity";
+    private final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_req_in_none_context).setOnClickListener(this);
         findViewById(R.id.view_group_req_in_view).setOnClickListener(this);
 
-        JPermissionUtil.requestAllPermission(this);
+        // JPermissionUtil.requestAllPermission(this);
 
         //设置各自品牌的系统权限页
 //        JPermissionUtil.setManuFacturer("genymotion", MyTestGenymotionMenu.class);
@@ -45,7 +46,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frame_layout, new MyFragment());
         transaction.commit();
-
     }
 
     @Override
@@ -82,7 +82,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void requestInView() {
-
     }
 
     private void requestInNoneContext() {
@@ -107,6 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Permission({Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA})
     private void requestTwoPermission() {
         Log.i(TAG, "请求两个权限成功（写和相机）");
+        Toast.makeText(this, "请求两个权限成功", Toast.LENGTH_LONG).show();
     }
 
     @Permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -125,7 +125,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void denied(int requestCode, List<String> denyList) {
-                Log.i(TAG, "denied====》申请manifest的全部{code=" + requestCode + ";denyList=" + denyList + "}");
+                Log.i(TAG,
+                        "denied====》申请manifest的全部{code=" + requestCode + ";denyList=" + denyList +
+                                "}");
             }
 
             @Override
@@ -144,7 +146,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             @Override
             public void denied(int requestCode, List<String> denyList) {
-                Log.i(TAG, "denied====》申请manifest的全部{code=" + requestCode + ";denyList=" + denyList + "}");
+                Log.i(
+                        TAG,
+                        "denied====》申请manifest的全部{\n" +
+                                "   code=" + requestCode + ";\n" +
+                                "   denyList=" + denyList + "\n" +
+                                "}");
             }
 
             @Override
@@ -167,13 +174,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @PermissionCanceled()
     private void cancel(CancelInfo cancelInfo) {
         Log.i(TAG, "cancel:" + cancelInfo.getRequestCode());
+        Toast.makeText(this, "权限取消", Toast.LENGTH_LONG).show();
     }
 
     @PermissionDenied()
     private void deny(DenyInfo denyInfo) {
-        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" + denyInfo.getDeniedPermissions() + "]");
+        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" +
+                denyInfo.getDeniedPermissions() + "]");
+        Toast.makeText(this, "权限拒绝", Toast.LENGTH_LONG).show();
         //前往开启权限的界面
-        JPermissionUtil.goToMenu(this);
+        // JPermissionUtil.goToMenu(this);
     }
 
 }

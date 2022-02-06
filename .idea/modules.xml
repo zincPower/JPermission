@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JPermission.iml" filepath="$PROJECT_DIR$/JPermission.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib.permission/lib.permission.iml" filepath="$PROJECT_DIR$/lib.permission/lib.permission.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/JPermission.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/JPermission.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib.permission/JPermission.lib.permission.iml" filepath="$PROJECT_DIR$/.idea/modules/lib.permission/JPermission.lib.permission.iml" />
     </modules>
   </component>
 </project>

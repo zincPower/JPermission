@@ -14,7 +14,18 @@ import java.lang.annotation.Target;
  */
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({
+        ElementType.METHOD,
+        // ElementType.ANNOTATION_TYPE,
+        // ElementType.CONSTRUCTOR,
+        // ElementType.FIELD,
+        // ElementType.LOCAL_VARIABLE,
+        // ElementType.PACKAGE,
+        // ElementType.PARAMETER,
+        // ElementType.TYPE,
+        // ElementType.TYPE_PARAMETER,
+        // ElementType.TYPE_USE
+})
 public @interface Permission {
 
     String[] value();

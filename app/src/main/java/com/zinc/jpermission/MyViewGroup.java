@@ -2,7 +2,6 @@ package com.zinc.jpermission;
 
 import android.Manifest;
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +14,8 @@ import com.zinc.libpermission.annotation.PermissionCanceled;
 import com.zinc.libpermission.annotation.PermissionDenied;
 import com.zinc.libpermission.bean.CancelInfo;
 import com.zinc.libpermission.bean.DenyInfo;
+
+import androidx.annotation.Nullable;
 
 /**
  * @author Jiang zinc
@@ -66,7 +67,7 @@ public class MyViewGroup extends LinearLayout {
 
     @PermissionDenied()
     private void deny(DenyInfo denyInfo) {
-        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" + denyInfo.getDeniedPermissions() + "]");
+        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" +
+                denyInfo.getDeniedPermissions() + "]");
     }
-
 }
