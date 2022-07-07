@@ -2,14 +2,12 @@ package com.zinc.jpermission;
 
 import android.Manifest;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.zinc.libpermission.annotation.Permission;
 import com.zinc.libpermission.annotation.PermissionCanceled;
 import com.zinc.libpermission.annotation.PermissionDenied;
 import com.zinc.libpermission.bean.CancelInfo;
 import com.zinc.libpermission.bean.DenyInfo;
-import com.zinc.libpermission.utils.JPermissionUtil;
 
 /**
  * @author Jiang zinc

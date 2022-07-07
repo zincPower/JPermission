@@ -7,7 +7,6 @@ import java.util.List;
  * @date 创建时间：2018/4/18
  * @description 被拒绝的权限的信息（点击了不再提示）
  */
-
 public class DenyInfo {
 
     private int requestInfo;

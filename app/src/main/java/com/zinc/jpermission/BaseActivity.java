@@ -4,6 +4,8 @@ import android.Manifest;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zinc.libpermission.annotation.Permission;
 import com.zinc.libpermission.annotation.PermissionCanceled;
 import com.zinc.libpermission.annotation.PermissionDenied;

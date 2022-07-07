@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.zinc.libpermission.annotation.Permission;
 import com.zinc.libpermission.annotation.PermissionCanceled;
 import com.zinc.libpermission.annotation.PermissionDenied;

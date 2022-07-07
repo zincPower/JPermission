@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+
+import androidx.fragment.app.FragmentTransaction;
 
 import com.zinc.libpermission.annotation.Permission;
 import com.zinc.libpermission.annotation.PermissionCanceled;

@@ -5,7 +5,6 @@ package com.zinc.libpermission.bean;
  * @date 创建时间：2018/4/18
  * @description 被取消授权的信息
  */
-
 public class CancelInfo {
 
     private int requestCode;

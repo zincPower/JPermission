@@ -21,7 +21,6 @@ import java.util.List;
  * @date 创建时间：2018/4/18
  * @description
  */
-
 public class JPermissionUtil {
 
     private static HashMap<String, Class<? extends IMenu>> permissionMenu = new HashMap<>();
@@ -48,30 +47,28 @@ public class JPermissionUtil {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 用于扩展设置支持品牌的类，brand是品牌，clazz是实现类，必须继承{@link IMenu}
-     * @version
+     * 用于扩展设置支持品牌的类，brand是品牌，clazz是实现类，必须继承{@link IMenu}
+     *
+     * @param brand
+     * @param clazz
      */
     public static void setManuFacturer(String brand, Class<? extends IMenu> clazz) {
         permissionMenu.put(brand.toLowerCase(), clazz);
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 前往权限设置菜单的工具类
-     * @version
+     * 前往权限设置菜单的工具类
+     *
+     * @param context
      */
     public static void goToMenu(Context context) {
-
-        Class clazz = permissionMenu.get(Build.MANUFACTURER.toLowerCase());
+        Class<? extends IMenu> clazz = permissionMenu.get(Build.MANUFACTURER.toLowerCase());
         if (clazz == null) {
             clazz = permissionMenu.get(MANUFACTURER_DEFAULT);
         }
 
         try {
-            IMenu iMenu = (IMenu) clazz.newInstance();
+            IMenu iMenu = clazz.newInstance();
 
             Intent menuIntent = iMenu.getMenuIntent(context);
             if (menuIntent == null) return;
@@ -84,13 +81,12 @@ public class JPermissionUtil {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 请求manifest中的权限，可以设置回调
-     * @version
+     * 请求 manifest 中的权限，可以设置回调
+     *
+     * @param context
+     * @param iPermission
      */
     public static void requestAllPermission(Context context, IPermission iPermission) {
-
         //如果小于 6.0 不进行逻辑处理
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
@@ -98,17 +94,16 @@ public class JPermissionUtil {
 
         String[] manifestPermission = JPermissionHelper.getManifestPermission(context);
         JPermissionActivity
-                .permissionRequest(context,
-                        manifestPermission,
-                        JPermissionHelper.DEFAULT_REQUEST_CODE,
-                        iPermission);
+            .permissionRequest(context,
+                manifestPermission,
+                JPermissionHelper.DEFAULT_REQUEST_CODE,
+                iPermission);
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 请求manifest中的权限。如果需要回调，可以使用{@link JPermissionUtil#requestAllPermission(Context, IPermission)}填写第二个参数。
-     * @version
+     * 请求manifest中的权限。如果需要回调，可以使用{@link JPermissionUtil#requestAllPermission(Context, IPermission)}填写第二个参数。
+     *
+     * @param context
      */
     public static void requestAllPermission(Context context) {
         requestAllPermission(context, new IPermission() {
@@ -130,10 +125,10 @@ public class JPermissionUtil {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 请求manifest中的权限，可以剔除一些权限。如果需要回调，可以使用{@link JPermissionUtil#requestAllPermission(Context, List, IPermission)}填写第三个参数。
-     * @version
+     * 请求manifest中的权限，可以剔除一些权限。如果需要回调，可以使用{@link JPermissionUtil#requestAllPermission(Context, List, IPermission)}填写第三个参数。
+     *
+     * @param context
+     * @param excluedPermission
      */
     public static void requestAllPermission(Context context, List<String> excluedPermission) {
         requestAllPermission(context, excluedPermission, new IPermission() {
@@ -155,14 +150,14 @@ public class JPermissionUtil {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 请求manifest中的权限，可以剔除一些权限和设置回调
-     * @version
+     * 请求manifest中的权限，可以剔除一些权限和设置回调
+     *
+     * @param context
+     * @param excludePermission
+     * @param iPermission
      */
-    public static void requestAllPermission(Context context, List<String> excluedPermission, IPermission iPermission) {
-
-        //如果小于 6.0 不进行逻辑处理
+    public static void requestAllPermission(Context context, List<String> excludePermission, IPermission iPermission) {
+        // 如果小于 6.0 不进行逻辑处理
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return;
         }
@@ -174,9 +169,9 @@ public class JPermissionUtil {
         }
 
         List<String> tempPer = new ArrayList<>();
-        for (int i = 0; i < manifestPermission.length; ++i) {
-            if (!excluedPermission.contains(manifestPermission[i])) {
-                tempPer.add(manifestPermission[i]);
+        for (String s : manifestPermission) {
+            if (!excludePermission.contains(s)) {
+                tempPer.add(s);
             }
         }
 
@@ -184,11 +179,12 @@ public class JPermissionUtil {
             return;
         }
 
-        JPermissionActivity
-                .permissionRequest(context,
-                        tempPer.toArray(new String[tempPer.size()]),
-                        JPermissionHelper.DEFAULT_REQUEST_CODE,
-                        iPermission);
+        JPermissionActivity.permissionRequest(
+            context,
+            tempPer.toArray(new String[tempPer.size()]),
+            JPermissionHelper.DEFAULT_REQUEST_CODE,
+            iPermission
+        );
     }
 
 }

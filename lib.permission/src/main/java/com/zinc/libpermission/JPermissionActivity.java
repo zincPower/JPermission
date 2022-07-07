@@ -9,6 +9,8 @@ import android.os.Bundle;
 import com.zinc.libpermission.callback.IPermission;
 import com.zinc.libpermission.utils.JPermissionHelper;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,6 @@ import androidx.core.app.ActivityCompat;
  * @date 创建时间：2018/4/18
  * @description
  */
-
 public class JPermissionActivity extends Activity {
 
     private static final String PARAM_PERMISSION = "param_permission";
@@ -35,7 +36,6 @@ public class JPermissionActivity extends Activity {
                                          String[] permissions,
                                          int requestCode,
                                          IPermission iPermission) {
-
         permissionListener = iPermission;
 
         Intent intent = new Intent(context, JPermissionActivity.class);
@@ -83,13 +83,11 @@ public class JPermissionActivity extends Activity {
             //可以从方法名requestPermissions以及第二个参数看出，是支持一次性申请多个权限的，系统会通过对话框逐一询问用户是否授权。
             ActivityCompat.requestPermissions(this, this.mPermissions, this.mRequestCode);
         }
-
-
     }
 
     /**
-     * grantResults对应于申请的结果，这里的数组对应于申请时的第二个权限字符串数组。
-     * 如果你同时申请两个权限，那么grantResults的length就为2，分别记录你两个权限的申请结果
+     * grantResults 对应于申请的结果，这里的数组对应于申请时的第二个权限字符串数组。
+     * 如果你同时申请两个权限，那么 grantResults 的 length 就为 2 ，分别记录你两个权限的申请结果
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
@@ -126,7 +124,6 @@ public class JPermissionActivity extends Activity {
         }
 
         finish();
-
     }
 
     @Override

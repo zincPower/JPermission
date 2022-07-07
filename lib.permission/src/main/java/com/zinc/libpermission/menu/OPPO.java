@@ -12,7 +12,6 @@ import com.zinc.libpermission.menu.base.IMenu;
  * @date 创建时间：2018/4/18
  * @description
  */
-
 public class OPPO implements IMenu {
 
     @Override

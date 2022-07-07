@@ -49,8 +49,8 @@ public class MyViewGroup extends LinearLayout {
             }
         });
         LinearLayout.LayoutParams params =
-                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
+            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
         button.setLayoutParams(params);
         addView(button);
     }
@@ -67,7 +67,7 @@ public class MyViewGroup extends LinearLayout {
 
     @PermissionDenied()
     private void deny(DenyInfo denyInfo) {
-        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" +
-                denyInfo.getDeniedPermissions() + "]");
+        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" + denyInfo.getDeniedPermissions() + "]");
     }
+
 }

@@ -1,14 +1,11 @@
 package com.zinc.libpermission.utils;
 
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
-
-import java.util.Arrays;
 
 import androidx.collection.SimpleArrayMap;
 import androidx.core.app.ActivityCompat;
@@ -19,16 +16,16 @@ import androidx.core.content.ContextCompat;
  * @date 创建时间：2018/4/18
  * @description
  */
-
 public class JPermissionHelper {
 
     public static final int DEFAULT_REQUEST_CODE = 0xABC1994;
     public static final String TAG = "JPermission";
 
     // 上下文
+    @SuppressLint("StaticFieldLeak")
     private static Context JPERMISSION_CONTEXT = null;
 
-    private static SimpleArrayMap<String, Integer> MIN_SDK_PERMISSIONS;
+    private static final SimpleArrayMap<String, Integer> MIN_SDK_PERMISSIONS;
 
     static {
         MIN_SDK_PERMISSIONS = new SimpleArrayMap<>(8);
@@ -59,10 +56,10 @@ public class JPermissionHelper {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 检查所有的权限是否被授权，被授予会返回0（即{@link PackageManager#PERMISSION_GRANTED}）
-     * @version
+     * 检查所有的权限是否被授权，被授予会返回0（即{@link PackageManager#PERMISSION_GRANTED}）
+     *
+     * @param grantResults
+     * @return
      */
     public static boolean verifyPermissions(int... grantResults) {
         if (grantResults.length == 0) {
@@ -77,10 +74,11 @@ public class JPermissionHelper {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 检测 一些权限 是否都授权。 都授权则返回true，如果还未授权则返回false
-     * @version
+     * 检测 一些权限 是否都授权。 都授权则返回true，如果还未授权则返回false
+     *
+     * @param context
+     * @param permissions
+     * @return
      */
     public static boolean hasSelfPermissions(Context context, String... permissions) {
         for (String permission : permissions) {
@@ -93,10 +91,10 @@ public class JPermissionHelper {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 如果在这个SDK版本存在的权限，则返回true
-     * @version
+     * 如果在这个SDK版本存在的权限，则返回true
+     *
+     * @param permission
+     * @return
      */
     private static boolean permissionExists(String permission) {
         Integer minVersion = MIN_SDK_PERMISSIONS.get(permission);
@@ -104,33 +102,33 @@ public class JPermissionHelper {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 检测某个权限是否已经授权；如果已授权则返回true，如果未授权则返回false
-     * @version
+     * 检测某个权限是否已经授权；如果已授权则返回true，如果未授权则返回false
+     *
+     * @param context
+     * @param permission
+     * @return
      */
     private static boolean hasSelfPermission(Context context, String permission) {
         try {
             // ContextCompat.checkSelfPermission，主要用于检测某个权限是否已经被授予。
-            // 方法返回值为PackageManager.PERMISSION_DENIED或者PackageManager.PERMISSION_GRANTED
-            // 当返回DENIED就需要进行申请授权了。
-            return ContextCompat.checkSelfPermission(context, permission) ==
-                    PackageManager.PERMISSION_GRANTED;
+            // 方法返回值为 PackageManager.PERMISSION_DENIED 或者 PackageManager.PERMISSION_GRANTED
+            // 当返回 DENIED 就需要进行申请授权了。
+            return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
         } catch (RuntimeException t) {
             return false;
         }
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 检查需要给予的权限是否需要显示理由
-     * @version
+     * 检查需要给予的权限是否需要显示理由
+     *
+     * @param activity
+     * @param permissions
+     * @return
      */
-    public static boolean shouldShowRequestPermissionRationale(Activity activity,
-                                                               String... permissions) {
+    public static boolean shouldShowRequestPermissionRationale(Activity activity, String... permissions) {
         for (String permission : permissions) {
-            // 这个API主要用于给用户一个申请权限的解释，该方法只有在用户在上一次已经拒绝过你的这个权限申请。
+            // 这个 API 主要用于给用户一个申请权限的解释，该方法只有在用户在上一次已经拒绝过你的这个权限申请。
             // 也就是说，用户已经拒绝一次了，你又弹个授权框，你需要给用户一个解释，为什么要授权，则使用该方法。
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                 return true;
@@ -140,18 +138,17 @@ public class JPermissionHelper {
     }
 
     /**
-     * @date 创建时间 2018/4/18
-     * @author Jiang zinc
-     * @Description 获取sdk 版本
-     * @version
+     * 获取 sdk 版本
+     *
+     * @param context
+     * @return
      */
     public static int getTargetSdkVersion(Context context) {
         try {
             if (targetSdkVersion != -1) {
                 return targetSdkVersion;
             }
-            PackageInfo packageInfo =
-                    context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             targetSdkVersion = packageInfo.applicationInfo.targetSdkVersion;
         } catch (PackageManager.NameNotFoundException ignored) {
         }
@@ -160,10 +157,8 @@ public class JPermissionHelper {
 
     public static String[] getManifestPermission(Context context) {
         try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
             String[] requestedPermissions = packageInfo.requestedPermissions;
-            Log.e("Test", Arrays.asList(requestedPermissions).toString());
             return requestedPermissions;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

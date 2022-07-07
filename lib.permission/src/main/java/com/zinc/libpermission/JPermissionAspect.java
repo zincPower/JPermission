@@ -20,8 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
-
 /**
  * @author Jiang zinc
  * @date 创建时间：2018/4/18
@@ -75,8 +73,8 @@ public class JPermissionAspect {
 
         if (object instanceof Context) {
             context = (Context) object;
-        } else if (object instanceof Fragment) {
-            context = ((Fragment) object).getActivity();
+        } else if (object instanceof androidx.fragment.app.Fragment) {
+            context = ((androidx.fragment.app.Fragment) object).getActivity();
         } else if (object instanceof android.app.Fragment) {
             context = ((android.app.Fragment) object).getActivity();
         } else if (object instanceof android.view.View) {

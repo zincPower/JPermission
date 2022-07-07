@@ -8,9 +8,8 @@ import android.content.Intent;
  * @date 创建时间：2018/4/18
  * @description
  */
-
 public interface IMenu {
 
-    public Intent getMenuIntent(Context context);
+    Intent getMenuIntent(Context context);
 
 }

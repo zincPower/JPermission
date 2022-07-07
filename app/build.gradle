@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: '../aspectj_for_app.gradle'
 
 android {
     compileSdkVersion project.compileSdkVersion as int
@@ -12,7 +13,6 @@ android {
         targetSdkVersion project.targetSdkVersion as int
         versionCode project.versionCode as int
         versionName project.version
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -29,71 +29,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-    implementation "androidx.core:core-ktx:$coreKtx"
-    implementation "androidx.appcompat:appcompat:$appcompat"
-    implementation "org.aspectj:aspectjrt:$aspectjVersion"
+
+    // androidx
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+
     implementation project(":lib.permission")
-}
-
-import org.aspectj.bridge.IMessage
-import org.aspectj.bridge.MessageHandler
-import org.aspectj.tools.ajc.Main
-
-final def log = project.logger
-final def variants = project.android.applicationVariants
-
-variants.all { variant ->
-    // 注意这里控制debug下生效，可以自行控制是否生效
-    if (!variant.buildType.isDebuggable()) {
-        log.debug("Skipping non-debuggable build type '${variant.buildType.name}'.")
-        return
-    }
-
-    JavaCompile javaCompile = variant.javaCompileProvider.get()
-    javaCompile.doLast {
-        String[] args = ["-showWeaveInfo",
-                         "-1.8", // java1.8
-                         "-inpath", javaCompile.destinationDir.toString(), //需要处理的class文件目录
-                         "-aspectpath", javaCompile.classpath.asPath,
-                         "-d", javaCompile.destinationDir.toString(),
-                         "-classpath", javaCompile.classpath.asPath,
-                         "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)]
-
-        log.debug "ajc args: " + Arrays.toString(args)
-
-        def buildType = variant.buildType.name
-
-        String[] kotlinArgs = ["-showWeaveInfo",
-                               "-1.8",
-                               "-inpath", project.buildDir.path + "/tmp/kotlin-classes/" + buildType,
-                               "-aspectpath", javaCompile.classpath.asPath,
-                               "-d", project.buildDir.path + "/tmp/kotlin-classes/" + buildType,
-                               "-classpath", javaCompile.classpath.asPath,
-                               "-bootclasspath", project.android.bootClasspath.join(File.pathSeparator)]
-
-        MessageHandler handler = new MessageHandler(true)
-        new Main().run(args, handler)
-        new Main().run(kotlinArgs, handler)
-
-        for (IMessage message : handler.getMessages(null, true)) {
-            switch (message.getKind()) {
-                case IMessage.ABORT:
-                case IMessage.ERROR:
-                case IMessage.FAIL:
-                    log.error message.message, message.thrown
-                    break
-                case IMessage.WARNING:
-                    log.warn message.message, message.thrown
-                    break
-                case IMessage.INFO:
-                    log.info message.message, message.thrown
-                    break
-                case IMessage.DEBUG:
-                    log.debug message.message, message.thrown
-                    break
-            }
-        }
-    }
-
 }
