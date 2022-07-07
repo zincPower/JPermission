@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -18,8 +19,6 @@ import com.zinc.libpermission.utils.JPermissionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.fragment.app.FragmentTransaction;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
@@ -56,7 +55,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 requestAll();
                 break;
             case R.id.btn_all_exclude:
-                requestAllExclue();
+                requestAllExclude();
                 break;
             case R.id.btn_one_permission:
                 requestOnePermission();
@@ -115,10 +114,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         Log.i(TAG, "请求一个权限成功（写权限）");
     }
 
-    private void requestAllExclue() {
-        List<String> excluePermission = new ArrayList<>();
-        excluePermission.add(Manifest.permission.CAMERA);
-        JPermissionUtil.requestAllPermission(this, excluePermission, new IPermission() {
+    private void requestAllExclude() {
+        List<String> excludePermission = new ArrayList<>();
+        excludePermission.add(Manifest.permission.CAMERA);
+        JPermissionUtil.requestAllPermission(this, excludePermission, new IPermission() {
             @Override
             public void ganted() {
                 Log.i(TAG, "ganted====》申请manifest的全部");
@@ -127,8 +126,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void denied(int requestCode, List<String> denyList) {
                 Log.i(TAG,
-                        "denied====》申请manifest的全部{code=" + requestCode + ";denyList=" + denyList +
-                                "}");
+                    "denied====》申请manifest的全部{code=" + requestCode + ";denyList=" + denyList +
+                        "}");
             }
 
             @Override
@@ -148,11 +147,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void denied(int requestCode, List<String> denyList) {
                 Log.i(
-                        TAG,
-                        "denied====》申请manifest的全部{\n" +
-                                "   code=" + requestCode + ";\n" +
-                                "   denyList=" + denyList + "\n" +
-                                "}");
+                    TAG,
+                    "denied====》申请manifest的全部{\n" +
+                        "   code=" + requestCode + ";\n" +
+                        "   denyList=" + denyList + "\n" +
+                        "}");
             }
 
             @Override
@@ -180,11 +179,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @PermissionDenied()
     private void deny(DenyInfo denyInfo) {
-        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + " ; deny:" +
-                denyInfo.getDeniedPermissions() + "]");
+        Log.i(TAG, "deny [code:" + denyInfo.getRequestInfo() + ";" +
+            "deny:" + denyInfo.getDeniedPermissions() + "]");
         Toast.makeText(this, "权限拒绝", Toast.LENGTH_LONG).show();
         //前往开启权限的界面
-        // JPermissionUtil.goToMenu(this);
+        JPermissionUtil.goToMenu(this);
     }
 
 }

@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class JPermissionUtil {
 
-    private static HashMap<String, Class<? extends IMenu>> permissionMenu = new HashMap<>();
+    private static final HashMap<String, Class<? extends IMenu>> permissionMenu = new HashMap<>();
 
     private static final String MANUFACTURER_DEFAULT = "Default";//默认
 

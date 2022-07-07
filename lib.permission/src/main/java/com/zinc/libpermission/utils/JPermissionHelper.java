@@ -158,8 +158,7 @@ public class JPermissionHelper {
     public static String[] getManifestPermission(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
-            String[] requestedPermissions = packageInfo.requestedPermissions;
-            return requestedPermissions;
+            return packageInfo.requestedPermissions;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
